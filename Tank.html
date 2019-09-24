@@ -1,32 +1,84 @@
 <html>
-    <head>
-        <title>Rotate</title>
-        <script src="Tank.js"></script>
-    </head>
-    <body>
-        <canvas id="canvas" style="border:1px solid #ccc" width="700" height="500"></canvas>
-        <script>
-            var canvas, canvasContext;
-            
-            window.onload = function(){
-                canvas = document.getElementById ('canvas');
-                canvasContext = canvas.getContext ('2d');
-                
-                setInterval(mainloop, 1000/60);
+
+<head>
+    <title>Rotate</title>
+    <script src="Tank.js"></script>
+</head>
+
+<body>
+    <canvas id="canvas" style="border:1px solid #ccc" width="700" height="500"></canvas>
+    <script>
+        var canvas, canvasContext;
+
+        window.onload = function() {
+            canvas = document.getElementById('canvas');
+            canvasContext = canvas.getContext('2d');
+
+            document.addEventListener('keydown', keyPressed);
+            document.addEventListener('keyup', keyReleased);
+
+            setInterval(mainloop, 1000 / 60);
+        }
+
+        var tankXpos = 0;
+        var tankYpos = 0;
+        const TANK_WIDTH = 40;
+        const TANK_HEIGHT = 30;
+        var tankXspeed = 5;
+        
+        const LEFT_KEY = 37; 
+        const RIGHT_KEY = 39; 
+        var leftKeyPressed = false;
+        var rightKeyPressed = false;
+
+        function mainloop() {
+            colorRect(0, 0, canvas.width, canvas.height, 'black');
+            colorRect(tankXpos, tankYpos, TANK_WIDTH, TANK_HEIGHT, 'red');
+
+            playerMove();
+        }
+
+        function keyPressed(evt) {
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPressed = true;
             }
-            
-            function mainloop(){
-                 colorRect(0,0,canvas.width,canvas.height, 'black');
-                 colorRect(0,0,30,30, 'red');
-            
+            if (evt.keyCode == RIGHT_KEY) {
+                rightKeyPressed = true;
             }
-            
-            function colorRect(x,y,w,h,c){
-                canvasContext.fillStyle = c;
-                canvasContext.fillRect(x,y,w,h);
+        }
+
+        function keyReleased(evt) {
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPressed = false;
             }
-            
-          
-        </script>        
-    </body>
+            if (evt.keyCode == RIGHT_KEY) {
+                rightKeyPressed = false;
+            }
+        }
+
+        function playerMove() {
+            if (rightKeyPressed) {
+                tankXpos += tankXspeed;
+            }
+            if (leftKeyPressed) {
+                tankXpos -= tankXspeed;
+            }
+
+            if (tankXpos > canvas.width - playerSize) {
+                tankXspeed *= -1;
+            }
+            if (tankXpos < 0) {
+                tankXspeed *= -1;
+            }
+
+        }
+
+        function colorRect(x, y, w, h, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x, y, w, h);
+        }
+
+    </script>
+</body>
+
 </html>
