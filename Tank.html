@@ -20,6 +20,7 @@
 
 			setInterval(mainloop, 1000 / 60);
 		}
+		var name = prompt("What is your name?");
 		var diffculty = prompt('How hard do you want it', 'Hard or easy');
 		var pass = false;
 		var tankXpos = 0;
@@ -33,7 +34,8 @@
 		var leftKeyPressed = false;
 		var rightKeyPressed = false;
 
-		function gameStart() {
+		function gameStart()
+		{
 			if (diffculty != 'easy' || diffculty != 'hard') {
 				var pass = false;
 				while (pass == false) {
@@ -81,7 +83,7 @@
 			if (tankXpos < 0) {
 				tankXspeed *= -1;
 			}
-			
+
 		}
 
 		function colorRect(x, y, w, h, c) {
