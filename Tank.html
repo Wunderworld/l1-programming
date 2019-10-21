@@ -1,84 +1,95 @@
 <html>
 
 <head>
-    <title>Rotate</title>
-    <script src="Tank.js"></script>
+	<title>Rotate</title>
+	<script src="Tank.js"></script>
 </head>
 
 <body>
-    <canvas id="canvas" style="border:1px solid #ccc" width="700" height="500"></canvas>
-    <script>
-        var canvas, canvasContext;
+	<canvas id="canvas" style="border:1px solid #ccc" width="700" height="500"></canvas>
+	<script>
+		var canvas, canvasContext;
 
-        window.onload = function() {
-            canvas = document.getElementById('canvas');
-            canvasContext = canvas.getContext('2d');
+		window.onload = function() {
+			canvas = document.getElementById('canvas');
+			canvasContext = canvas.getContext('2d');
 
-            document.addEventListener('keydown', keyPressed);
-            document.addEventListener('keyup', keyReleased);
+			document.addEventListener('keydown', keyPressed);
+			document.addEventListener('keyup', keyReleased);
 
-            setInterval(mainloop, 1000 / 60);
-        }
 
-        var tankXpos = 0;
-        var tankYpos = 0;
-        const TANK_WIDTH = 40;
-        const TANK_HEIGHT = 30;
-        var tankXspeed = 5;
-        
-        const LEFT_KEY = 37; 
-        const RIGHT_KEY = 39; 
-        var leftKeyPressed = false;
-        var rightKeyPressed = false;
+			setInterval(mainloop, 1000 / 60);
+		}
+		var diffculty = prompt('How hard do you want it', 'Hard or easy');
+		var pass = false;
+		var tankXpos = 0;
+		var tankYpos = 0;
+		const TANK_WIDTH = 40;
+		const TANK_HEIGHT = 30;
+		var tankXspeed = 5;
 
-        function mainloop() {
-            colorRect(0, 0, canvas.width, canvas.height, 'black');
-            colorRect(tankXpos, tankYpos, TANK_WIDTH, TANK_HEIGHT, 'red');
+		const LEFT_KEY = 37;
+		const RIGHT_KEY = 39;
+		var leftKeyPressed = false;
+		var rightKeyPressed = false;
 
-            playerMove();
-        }
+		function gameStart() {
+			if (diffculty != 'easy' || diffculty != 'hard') {
+				var pass = false;
+				while (pass == false) {
+					diffculty = prompt('How hard?', 'easy');
+				}
+			}
+		}
 
-        function keyPressed(evt) {
-            if (evt.keyCode == LEFT_KEY) {
-                leftKeyPressed = true;
-            }
-            if (evt.keyCode == RIGHT_KEY) {
-                rightKeyPressed = true;
-            }
-        }
+		function mainloop() {
+			colorRect(0, 0, canvas.width, canvas.height, 'black');
+			colorRect(tankXpos, tankYpos, TANK_WIDTH, TANK_HEIGHT, 'red');
 
-        function keyReleased(evt) {
-            if (evt.keyCode == LEFT_KEY) {
-                leftKeyPressed = false;
-            }
-            if (evt.keyCode == RIGHT_KEY) {
-                rightKeyPressed = false;
-            }
-        }
+			playerMove();
+		}
 
-        function playerMove() {
-            if (rightKeyPressed) {
-                tankXpos += tankXspeed;
-            }
-            if (leftKeyPressed) {
-                tankXpos -= tankXspeed;
-            }
+		function keyPressed(evt) {
+			if (evt.keyCode == LEFT_KEY) {
+				leftKeyPressed = true;
+			}
+			if (evt.keyCode == RIGHT_KEY) {
+				rightKeyPressed = true;
+			}
+		}
 
-            if (tankXpos > canvas.width - playerSize) {
-                tankXspeed *= -1;
-            }
-            if (tankXpos < 0) {
-                tankXspeed *= -1;
-            }
+		function keyReleased(evt) {
+			if (evt.keyCode == LEFT_KEY) {
+				leftKeyPressed = false;
+			}
+			if (evt.keyCode == RIGHT_KEY) {
+				rightKeyPressed = false;
+			}
+		}
 
-        }
+		function playerMove(evt) {
+			if (rightKeyPressed) {
+				tankXpos += tankXspeed;
+			}
+			if (leftKeyPressed) {
+				tankXpos -= tankXspeed;
+			}
 
-        function colorRect(x, y, w, h, c) {
-            canvasContext.fillStyle = c;
-            canvasContext.fillRect(x, y, w, h);
-        }
+			if (tankXpos > canvas.width - playerSize) {
+				tankXspeed *= -1;
+			}
+			if (tankXpos < 0) {
+				tankXspeed *= -1;
+			}
+			
+		}
 
-    </script>
+		function colorRect(x, y, w, h, c) {
+			canvasContext.fillStyle = c;
+			canvasContext.fillRect(x, y, w, h);
+		}
+
+	</script>
 </body>
 
 </html>
